@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BookingDashboardActivity">
+
+    <!-- Header TextView -->
+    <TextView
+        android:id="@+id/headerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Electric Service Booking"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Profile ImageView -->
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="-3dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="Profile"
+        android:src="@drawable/ic_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/headerText" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/contentCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:layout_constraintBottom_toTopOf="@id/navigationCardView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerText">
+
+        <!-- Main Card Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- Nested CardView for Service Introduction -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <!-- Service Introduction -->
+                    <TextView
+                        android:id="@+id/serviceTitleTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:text="Introducing Our Electrical Services"
+                        android:textColor="#1E88E5"
+                        android:textSize="26sp"
+                        android:textStyle="bold" />
+
+                    <!-- Service Description -->
+                    <TextView
+                        android:id="@+id/serviceDescriptionTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:text="With over 10 years of experience in the industry, our 5-member team is dedicated to providing top-notch electrical services. We offer expertise in wiring, repairs, and installations, ensuring that every job is completed with the highest level of quality. Our skilled team is committed to your satisfaction, making sure every detail is handled professionally."
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Photos of Services -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Service Photo 1"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/photo1" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Service Photo 2"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/photo2" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="180dp"
+                    android:layout_weight="1"
+                    android:contentDescription="Service Photo 3"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/photo3" />
+            </LinearLayout>
+
+            <!-- Employee Skills and Experience -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:text="Our Team's Expertise"
+                android:textColor="#D32F2F"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="Our team of highly skilled professionals brings over 10 years of combined experience in electrical services. Each team member is trained to handle a wide range of electrical tasks with precision and care. From complex wiring to quick repairs, we ensure that every job is done right the first time."
+                android:textColor="#333333"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <!-- New Card for First Name and Logout -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/userInfoCardView"
+        android:layout_width="200dp"
+        android:layout_height="130dp"
+        android:layout_margin="16dp"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileImageView">
+
+        <!-- Card Content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Display First Name -->
+            <TextView
+                android:id="@+id/firstNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text=""
+                android:textSize="18sp" />
+
+            <!-- Logout Button -->
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Logout" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <include
+        layout="@layout/navigation_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
