@@ -148,13 +148,14 @@
     <!-- New Card for First Name and Logout -->
     <androidx.cardview.widget.CardView
         android:id="@+id/userInfoCardView"
-        android:layout_width="200dp"
-        android:layout_height="130dp"
-        android:layout_margin="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="2dp"
         android:visibility="gone"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profileImageView">
 
@@ -163,26 +164,42 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="10dp">
 
             <!-- Display First Name -->
             <TextView
                 android:id="@+id/firstNameTextView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text=""
-                android:textSize="18sp" />
+                android:text="Hello, [Name]"
+                android:textSize="18sp"
+                android:textColor="#3E4A59"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="6dp" />
+
+            <!-- Divider Line -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#E0E0E0"
+                android:layout_marginBottom="6dp" />
 
             <!-- Logout Button -->
             <Button
                 android:id="@+id/logoutButton"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Logout" />
+                android:text="Logout"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#1E88E5"
+                android:textSize="16sp"
+                android:paddingVertical="2dp"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 
     <include
         layout="@layout/navigation_card"
