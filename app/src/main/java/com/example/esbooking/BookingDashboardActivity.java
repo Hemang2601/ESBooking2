@@ -61,8 +61,10 @@ public class BookingDashboardActivity extends AppCompatActivity {
         appointmentsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to AppointmentsActivity
+                // Navigate to AppointmentsActivity with user_id and username
                 Intent appointmentsIntent = new Intent(BookingDashboardActivity.this, AppointmentsActivity.class);
+                appointmentsIntent.putExtra("user_id", userId);
+                appointmentsIntent.putExtra("username", username);
                 startActivity(appointmentsIntent);
             }
         });
@@ -70,8 +72,10 @@ public class BookingDashboardActivity extends AppCompatActivity {
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to ProfileActivity
+                // Navigate to ProfileActivity with user_id and username
                 Intent profileIntent = new Intent(BookingDashboardActivity.this, ProfileActivity.class);
+                profileIntent.putExtra("user_id", userId);
+                profileIntent.putExtra("username", username);
                 startActivity(profileIntent);
             }
         });
@@ -79,8 +83,10 @@ public class BookingDashboardActivity extends AppCompatActivity {
         contactButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navigate to ContactActivity
+                // Navigate to ContactActivity with user_id and username
                 Intent contactIntent = new Intent(BookingDashboardActivity.this, ContactActivity.class);
+                contactIntent.putExtra("user_id", userId);
+                contactIntent.putExtra("username", username);
                 startActivity(contactIntent);
             }
         });

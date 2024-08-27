@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String BASE_URL = "https://192.168.1.77/Booking/"; // Replace with your actual API base URL
+    private static final String BASE_URL = "https://192.168.1.77/ESBooking/"; // Replace with your actual API base URL
 
     private static Retrofit retrofit;
 
