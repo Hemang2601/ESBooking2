@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
+    <!-- Profile Header -->
     <TextView
         android:id="@+id/profileHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Profile"
+        android:text="Profile Settings"
         android:textSize="24sp"
         android:textStyle="bold"
         android:layout_marginTop="16dp"
@@ -18,8 +19,147 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Add more views for displaying user profile information -->
+    <!-- Profile Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="#F9F9F9"
+        app:layout_constraintTop_toBottomOf="@id/profileHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- User Name -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_person"
+                    android:contentDescription="User Icon"/>
+
+                <TextView
+                    android:id="@+id/userNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name: Lakhadiya Hemang"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:layout_marginStart="12dp"/>
+            </LinearLayout>
+
+            <!-- User Email -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_email"
+                    android:contentDescription="Email Icon"/>
+
+                <TextView
+                    android:id="@+id/userEmailTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Email: lakhadiyahemang@gmail.com"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:layout_marginStart="12dp"/>
+            </LinearLayout>
+
+            <!-- User Phone -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_phone"
+                    android:contentDescription="Phone Icon"/>
+
+                <TextView
+                    android:id="@+id/userPhoneTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phone: +91 9876543210"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:layout_marginStart="12dp"/>
+            </LinearLayout>
+
+            <!-- User Address -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_location"
+                    android:contentDescription="Address Icon"/>
+
+                <TextView
+                    android:id="@+id/userAddressTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Address: 1234 Elm Street, Rajkot, India"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:layout_marginStart="12dp"/>
+            </LinearLayout>
+
+            <!-- Change Password Field -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_lock"
+                    android:contentDescription="Change Password Icon"/>
+
+                <TextView
+                    android:id="@+id/changePasswordTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Password"
+                    android:textSize="16sp"
+                    android:textColor="#C2185B"
+                    android:layout_marginStart="12dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Navigation Card -->
     <include
         layout="@layout/navigation_card"
         android:layout_width="0dp"
