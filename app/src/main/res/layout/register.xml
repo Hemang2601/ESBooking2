@@ -8,6 +8,15 @@
     android:background="#F5F5F5"
     tools:context=".RegisterActivity">
 
+    <ProgressBar
+        android:id="@+id/spinnerLoader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:indeterminate="true"
+        android:layout_margin="16dp"/>
+
     <!-- Registration CardView -->
     <androidx.cardview.widget.CardView
         android:id="@+id/registerCardView"

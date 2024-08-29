@@ -1,17 +1,15 @@
-<!-- res/drawable/custom_button_background.xml -->
+<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorPrimaryDark" />
-            <corners android:radius="8dp" />
-            <stroke android:color="@color/colorPrimary" android:width="2dp" />
+            <solid android:color="#2980b9"/> <!-- Darker shade on press -->
+            <corners android:radius="16dp"/>
         </shape>
     </item>
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorPrimary" />
-            <corners android:radius="8dp" />
-            <stroke android:color="@color/colorPrimary" android:width="2dp" />
+            <solid android:color="#3498db"/> <!-- Default button color -->
+            <corners android:radius="16dp"/>
         </shape>
     </item>
 </selector>

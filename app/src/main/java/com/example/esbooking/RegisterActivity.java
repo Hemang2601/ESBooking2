@@ -3,10 +3,12 @@ package com.example.esbooking;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button registerButton;
     private TextView loginLink;
     private CardView registerCardView;
+    private ProgressBar spinnerLoader; // Add this line
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.registerButton);
         loginLink = findViewById(R.id.loginLink);
         registerCardView = findViewById(R.id.registerCardView);
+        spinnerLoader = findViewById(R.id.spinnerLoader); // Initialize ProgressBar
 
         // Set onClickListener for registerButton
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +84,10 @@ public class RegisterActivity extends AppCompatActivity {
                     return; // Abort registration if the email format is incorrect
                 }
 
+                // Hide the CardView and show the ProgressBar
+                registerCardView.setVisibility(View.GONE);
+                spinnerLoader.setVisibility(View.VISIBLE);
+
                 // Create a User object
                 User user = new User(email, username, password);
 
@@ -90,7 +98,6 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser(user);
             }
         });
-
 
         // Set onClickListener for loginLink
         loginLink.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +123,10 @@ public class RegisterActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                // Hide the ProgressBar and show the CardView
+                spinnerLoader.setVisibility(View.GONE);
+                registerCardView.setVisibility(View.VISIBLE);
+
                 if (response.isSuccessful()) {
                     try {
                         String responseBody = response.body().string();
@@ -132,6 +143,16 @@ public class RegisterActivity extends AppCompatActivity {
                             // Registration failed due to email already existing, show Toast
                             String message = jsonResponse.getString("message");
                             Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+
+                            // Redirect to the MainActivity after a short delay
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                                    startActivity(intent);
+                                    finish();  // Close the current activity
+                                }
+                            }, 000); // 2 seconds delay for user to read the Toast
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
@@ -150,11 +171,16 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                // Hide the ProgressBar and show the CardView
+                spinnerLoader.setVisibility(View.GONE);
+                registerCardView.setVisibility(View.VISIBLE);
+
                 // Handle failure, such as network issues
                 Log.e(TAG, "Registration failed. Network error: " + t.getMessage());
             }
         });
     }
+
 
     private void showCustomAlertDialog(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -184,8 +210,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         // Create and show the AlertDialog with fade-in animation
         alertDialog.show();
-
     }
-
-
+    @Override
+    public void onBackPressed() {
+        // Navigate to the login activity
+        super.onBackPressed();
+        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();  // Close the current activity
+    }
 }
