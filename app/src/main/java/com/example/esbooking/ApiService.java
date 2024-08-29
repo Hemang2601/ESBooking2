@@ -5,7 +5,9 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiService {
     @POST("register.php")
@@ -33,5 +35,14 @@ public interface ApiService {
             @Field("new_password") String newPassword
     );
 
+    @GET("user_profile_data.php")
+    Call<UserProfileResponse> getUserProfile(@Query("user_id") String userId);
+
+    @FormUrlEncoded
+    @POST("profilechangepassword.php")
+    Call<ChangePasswordResponse> profileChangePassword(
+            @Field("user_id") String userId,
+            @Field("new_password") String newPassword
+    );
 
 }

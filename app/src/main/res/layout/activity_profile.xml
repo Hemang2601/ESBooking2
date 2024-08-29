@@ -19,15 +19,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- ProgressBar -->
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/profileHeader"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:indeterminate="true"
+        android:layout_gravity="center"/>
+
     <!-- Profile Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/profileCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:visibility="visible"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp"
-        app:cardBackgroundColor="#F9F9F9"
+        app:cardBackgroundColor="#FFFFFF"
         app:layout_constraintTop_toBottomOf="@id/profileHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -36,104 +51,135 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="16dp">
 
-            <!-- User Name -->
-            <LinearLayout
+            <!-- TableLayout for aligning icons, labels, and values -->
+            <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:stretchColumns="1">
 
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/ic_person"
-                    android:contentDescription="User Icon"/>
-
-                <TextView
-                    android:id="@+id/userNameTextView"
-                    android:layout_width="wrap_content"
+                <!-- User Name -->
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Name: Lakhadiya Hemang"
-                    android:textSize="16sp"
-                    android:textColor="#333333"
-                    android:layout_marginStart="12dp"/>
-            </LinearLayout>
+                    android:paddingBottom="8dp">
 
-            <!-- User Email -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="8dp">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_person"
+                        android:contentDescription="User Icon"/>
 
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/ic_email"
-                    android:contentDescription="Email Icon"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name:"
+                        android:textSize="16sp"
+                        android:textColor="#666666"
+                        android:paddingStart="12dp"/>
 
-                <TextView
-                    android:id="@+id/userEmailTextView"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/userNameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Data Not Found"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:layout_marginStart="8dp"/>
+                </TableRow>
+
+                <!-- User Email -->
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Email: lakhadiyahemang@gmail.com"
-                    android:textSize="16sp"
-                    android:textColor="#333333"
-                    android:layout_marginStart="12dp"/>
-            </LinearLayout>
+                    android:paddingBottom="8dp">
 
-            <!-- User Phone -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="8dp">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_email"
+                        android:contentDescription="Email Icon"/>
 
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/ic_phone"
-                    android:contentDescription="Phone Icon"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email:"
+                        android:textSize="16sp"
+                        android:textColor="#666666"
+                        android:paddingStart="12dp"/>
 
-                <TextView
-                    android:id="@+id/userPhoneTextView"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/userEmailTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Data Not Found"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:layout_marginStart="8dp"/>
+                </TableRow>
+
+                <!-- User Phone -->
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Phone: +91 9876543210"
-                    android:textSize="16sp"
-                    android:textColor="#333333"
-                    android:layout_marginStart="12dp"/>
-            </LinearLayout>
+                    android:paddingBottom="8dp">
 
-            <!-- User Address -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginTop="8dp">
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_phone"
+                        android:contentDescription="Phone Icon"/>
 
-                <ImageView
-                    android:layout_width="28dp"
-                    android:layout_height="28dp"
-                    android:src="@drawable/ic_location"
-                    android:contentDescription="Address Icon"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phone:"
+                        android:textSize="16sp"
+                        android:textColor="#666666"
+                        android:paddingStart="12dp"/>
 
-                <TextView
-                    android:id="@+id/userAddressTextView"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/userPhoneTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Data Not Found"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:layout_marginStart="8dp"/>
+                </TableRow>
+
+                <!-- User Address -->
+                <TableRow
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Address: 1234 Elm Street, Rajkot, India"
-                    android:textSize="16sp"
-                    android:textColor="#333333"
-                    android:layout_marginStart="12dp"/>
-            </LinearLayout>
+                    android:paddingBottom="16dp">
 
-            <!-- Change Password Button -->
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_location"
+                        android:contentDescription="Address Icon"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address:"
+                        android:textSize="16sp"
+                        android:textColor="#666666"
+                        android:paddingStart="12dp"/>
+
+                    <TextView
+                        android:id="@+id/userAddressTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Data Not Found"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:layout_marginStart="8dp"/>
+                </TableRow>
+            </TableLayout>
+
             <Button
                 android:id="@+id/changePasswordButton"
                 android:layout_width="wrap_content"
@@ -142,14 +188,129 @@
                 android:textSize="16sp"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#C2185B"
+                android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
                 android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:gravity="center_vertical"/>
+                android:paddingBottom="8dp"/>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
+    <!-- Change Password Card -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/changePasswordCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:visibility="visible"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/profileCardView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Change Password Header -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Change Password"
+                android:textSize="18sp"
+                android:textColor="#333333"
+                android:layout_marginBottom="16dp"
+                android:textStyle="bold"/>
+
+            <!-- New Password -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_lock_2"
+                android:contentDescription="New Password Icon"/>
+
+                <EditText
+                    android:id="@+id/newPasswordEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:hint="New Password"
+                    android:inputType="textPassword"
+                    android:textColor="#333333"/>
+            </LinearLayout>
+
+            <!-- Confirm Password -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_lock_2"
+                    android:contentDescription="Confirm Password Icon"/>
+
+                <EditText
+                    android:id="@+id/confirmPasswordEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:hint="Confirm Password"
+                    android:inputType="textPassword"
+                    android:textColor="#333333"/>
+            </LinearLayout>
+
+            <!-- Agree to Terms -->
+            <CheckBox
+                android:id="@+id/agreeTermsCheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I agree to the terms and conditions"
+                android:textColor="#666666"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Change Password Button -->
+            <Button
+                android:id="@+id/newchangePasswordButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:backgroundTint="#C2185B"
+                android:paddingStart="12dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="8dp"
+                android:text="Change Password"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
 
     <!-- Navigation Card -->
     <include
