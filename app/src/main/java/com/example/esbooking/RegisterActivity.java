@@ -67,7 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Retrieve data from EditText fields
                 String email = emailEditText.getText().toString();
-                String username = usernameEditText.getText().toString();
+                String username = usernameEditText.getText().toString().toUpperCase();
                 String password = passwordEditText.getText().toString();
 
                 // Check if any field is empty
@@ -125,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 // Hide the ProgressBar and show the CardView
                 spinnerLoader.setVisibility(View.GONE);
-                registerCardView.setVisibility(View.VISIBLE);
+                registerCardView.setVisibility(View.GONE);
 
                 if (response.isSuccessful()) {
                     try {
