@@ -1,384 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#F5F5F5">
 
-    <!-- Heading for the Activity -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Book Appointment"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Container for Services Card -->
-    <androidx.cardview.widget.CardView
+    <!-- Header with Back Arrow and Title -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="8dp">
+        android:paddingBottom="16dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <!-- Back Arrow Button -->
+        <ImageView
+            android:id="@+id/backArrowButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_back_arrow"
+            android:contentDescription="Back"
+            android:padding="8dp"
+            android:layout_gravity="start"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <!-- Title for the activity -->
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_gravity="center"
+            android:text="Book Appointment"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+    </FrameLayout>
 
-            <!-- Table Header -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="Service Name"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Qty"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select"
-                    android:textStyle="bold"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-            <!-- Services -->
-            <!-- Service 1 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <EditText
-                    android:id="@+id/serviceNameEditText1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Service 1"
-                    android:inputType="text"
-                    android:padding="8dp"/>
-
-                <EditText
-                    android:id="@+id/serviceQtyEditText1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Qty"
-                    android:inputType="number"
-                    android:padding="8dp"/>
-
-                <CheckBox
-                    android:id="@+id/serviceCheckBox1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-            <!-- Repeat for services 2 through 10 -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <EditText
-                    android:id="@+id/serviceNameEditText2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Service 2"
-                    android:inputType="text"
-                    android:padding="8dp"/>
-
-                <EditText
-                    android:id="@+id/serviceQtyEditText2"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Qty"
-                    android:inputType="number"
-                    android:padding="8dp"/>
-
-                <CheckBox
-                    android:id="@+id/serviceCheckBox2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-            <!-- Repeat for remaining services (3 to 10) in similar fashion -->
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <EditText
-                    android:id="@+id/serviceNameEditText3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Service 3"
-                    android:inputType="text"
-                    android:padding="8dp"/>
-
-                <EditText
-                    android:id="@+id/serviceQtyEditText3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Qty"
-                    android:inputType="number"
-                    android:padding="8dp"/>
-
-                <CheckBox
-                    android:id="@+id/serviceCheckBox3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <EditText
-                    android:id="@+id/serviceNameEditText4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Service 4"
-                    android:inputType="text"
-                    android:padding="8dp"/>
-
-                <EditText
-                    android:id="@+id/serviceQtyEditText4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Qty"
-                    android:inputType="number"
-                    android:padding="8dp"/>
-
-                <CheckBox
-                    android:id="@+id/serviceCheckBox4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <EditText
-                    android:id="@+id/serviceNameEditText5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Service 5"
-                    android:inputType="text"
-                    android:padding="8dp"/>
-
-                <EditText
-                    android:id="@+id/serviceQtyEditText5"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Qty"
-                    android:inputType="number"
-                    android:padding="8dp"/>
-
-                <CheckBox
-                    android:id="@+id/serviceCheckBox5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <EditText
-                    android:id="@+id/serviceNameEditText6"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Service 6"
-                    android:inputType="text"
-                    android:padding="8dp"/>
-
-                <EditText
-                    android:id="@+id/serviceQtyEditText6"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Qty"
-                    android:inputType="number"
-                    android:padding="8dp"/>
-
-                <CheckBox
-                    android:id="@+id/serviceCheckBox6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <EditText
-                    android:id="@+id/serviceNameEditText7"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Service 7"
-                    android:inputType="text"
-                    android:padding="8dp"/>
-
-                <EditText
-                    android:id="@+id/serviceQtyEditText7"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Qty"
-                    android:inputType="number"
-                    android:padding="8dp"/>
-
-                <CheckBox
-                    android:id="@+id/serviceCheckBox7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="8dp">
-
-                <EditText
-                    android:id="@+id/serviceNameEditText8"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:hint="Service 8"
-                    android:inputType="text"
-                    android:padding="8dp"/>
-
-                <EditText
-                    android:id="@+id/serviceQtyEditText8"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Qty"
-                    android:inputType="number"
-                    android:padding="8dp"/>
-
-                <CheckBox
-                    android:id="@+id/serviceCheckBox8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-
-            <!-- Date and Time Inputs -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_marginTop="10dp">
-
-                <!-- Date Input -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select Date"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:paddingBottom="8dp"/>
-
-                <Button
-                    android:id="@+id/selectDateButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Select Date"
-                    android:padding="8dp"/>
-
-                <!-- Time Input -->
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select Time"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:paddingBottom="8dp"
-                    android:layout_marginTop="16dp"/>
-
-                <Button
-                    android:id="@+id/selectTimeButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Select Time"
-                    android:padding="8dp"/>
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <!-- Book Appointment Button -->
-    <Button
-        android:id="@+id/bookServiceButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Book Appointment"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"/>
-
-    <!-- Back to Appointments Button -->
-    <Button
-        android:id="@+id/backToAppointmentsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back to Appointments"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"/>
-
+    <!-- RecyclerView for displaying available services -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/availableServicesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:background="@android:color/white"
+        android:elevation="2dp"/>
 </LinearLayout>
