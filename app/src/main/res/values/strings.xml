@@ -2,5 +2,5 @@
     <string name="app_name">ESBooking</string>
     <string name="pending_icon" />
     <string name="dialog_icon_desc">Icon representing registration success</string>
-
+    <string name="progress_dialog_message">Booking appointment...</string>
 </resources>

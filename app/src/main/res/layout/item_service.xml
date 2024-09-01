@@ -1,64 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/servicedata"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="@android:color/white"
-    android:layout_marginBottom="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:elevation="4dp"
-    android:layout_marginTop="8dp"
-    android:paddingBottom="12dp"
-    android:paddingTop="12dp">
+    android:layout_margin="8dp"
 
-    <!-- Horizontal LinearLayout for serviceName and CheckBox -->
-    <LinearLayout
-        android:id="@+id/lineserviceName"
+    android:background="@android:color/white">
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true">
+        android:padding="16dp">
+
+        <!-- Horizontal LinearLayout for serviceName and CheckBox -->
+        <LinearLayout
+            android:id="@+id/lineserviceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:id="@+id/serviceName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginEnd="8dp"
+                android:text="Service Name"/>
+
+            <CheckBox
+                android:id="@+id/serviceCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_gravity="end"/>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/serviceName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginEnd="8dp"
-            android:text="Service Name"/>
-
-        <CheckBox
-            android:id="@+id/serviceCheckbox"
+            android:id="@+id/serviceDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:layout_gravity="end"/>
-    </LinearLayout>
+            android:textSize="14sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_below="@id/lineserviceName"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:text="Description of the service goes here. It provides details about what is included."/>
 
-    <TextView
-        android:id="@+id/serviceDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="@android:color/darker_gray"
-        android:layout_below="@id/lineserviceName"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="8dp"
-        android:text="Description of the service goes here. It provides details about what is included."/>
-
-    <TextView
-        android:id="@+id/servicePrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/holo_green_dark"
-        android:layout_below="@id/serviceDescription"
-        android:text="₹Price"/>
-</RelativeLayout>
+        <TextView
+            android:id="@+id/servicePrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_green_dark"
+            android:layout_below="@id/serviceDescription"
+            android:text="₹Price"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

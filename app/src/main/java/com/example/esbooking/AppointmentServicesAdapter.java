@@ -2,6 +2,7 @@ package com.example.esbooking;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -84,6 +86,7 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
         } else { // FooterViewHolder
             FooterViewHolder footerHolder = (FooterViewHolder) holder;
 
+            footerHolder.footercard.setVisibility(View.VISIBLE);
             footerHolder.selectDateButton.setOnClickListener(v -> showDatePicker(footerHolder));
             footerHolder.selectTimeButton.setOnClickListener(v -> showCustomHourPicker(footerHolder));
             footerHolder.addAppointmentButton.setOnClickListener(v -> handleAddAppointment(footerHolder));
@@ -210,6 +213,9 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
             Log.d(TAG, "Selected Time: " + selectedTime);
             Log.d(TAG, "Selected Service IDs: " + serviceIdsString);
 
+            // Show the ProgressDialog
+            holder.progressDialog.show();
+
             // Create a single appointment request for all services
             AppointmentRequest appointmentRequest = new AppointmentRequest(
                     userId,
@@ -218,14 +224,15 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
                     selectedTime
             );
 
-            // Log appointment request details
-            Log.d(TAG, "Appointment request: " + appointmentRequest.toString());
-
             // Make API call to book appointment
             Call<AppointmentResponse> call = apiService.bookAppointment(appointmentRequest);
+
             call.enqueue(new Callback<AppointmentResponse>() {
                 @Override
                 public void onResponse(Call<AppointmentResponse> call, Response<AppointmentResponse> response) {
+                    // Dismiss the ProgressDialog
+                    holder.progressDialog.dismiss();
+
                     if (response.isSuccessful()) {
                         AppointmentResponse appointmentResponse = response.body();
                         if (appointmentResponse != null && appointmentResponse.isSuccess()) {
@@ -258,6 +265,9 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
 
                 @Override
                 public void onFailure(Call<AppointmentResponse> call, Throwable t) {
+                    // Dismiss the ProgressDialog
+                    holder.progressDialog.dismiss();
+
                     holder.availableServicesRecyclerView.setVisibility(View.VISIBLE);
                     Toast.makeText(holder.itemView.getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Network error: " + t.getMessage());
@@ -270,11 +280,13 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
 
+
     static class AppointmentServiceViewHolder extends RecyclerView.ViewHolder {
         TextView serviceName;
         TextView serviceDescription;
         TextView servicePrice;
         CheckBox serviceCheckbox;
+
 
         AppointmentServiceViewHolder(View itemView) {
             super(itemView);
@@ -291,7 +303,11 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
         Button addAppointmentButton;
         CheckBox termsCheckbox;
 
+        ProgressDialog progressDialog;
+
         RecyclerView availableServicesRecyclerView;
+
+        CardView footercard,servicedata;
 
 
         FooterViewHolder(View itemView) {
@@ -300,8 +316,15 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
             selectTimeButton = itemView.findViewById(R.id.selectTimeButton);
             addAppointmentButton = itemView.findViewById(R.id.addAppointmentButton);
             termsCheckbox = itemView.findViewById(R.id.termsCheckbox);
-
             availableServicesRecyclerView = itemView.findViewById(R.id.availableServicesRecyclerView);
+            footercard = itemView.findViewById(R.id.footercard);
+            servicedata = itemView.findViewById(R.id.servicedata);
+
+            // Initialize the ProgressDialog
+            progressDialog = new ProgressDialog(itemView.getContext());
+            progressDialog.setMessage(itemView.getContext().getString(R.string.progress_dialog_message));
+            progressDialog.setCancelable(false);
+
         }
     }
 }

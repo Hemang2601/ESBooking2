@@ -57,7 +57,6 @@ public class BookingDashboardActivity extends AppCompatActivity {
         ImageButton profileButton = findViewById(R.id.navigation_profile);
         ImageButton contactButton = findViewById(R.id.navigation_contact);
 
-        // Set up click listeners for navigation buttons
         appointmentsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
