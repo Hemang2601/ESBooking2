@@ -37,6 +37,8 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
     private ApiService apiService;
     private String userId; // Add this field
 
+
+
     public AppointmentServicesAdapter(List<AppointmentService> appointmentServiceList, String userId) {
         this.appointmentServiceList = appointmentServiceList;
         this.userId = userId; // Initialize userId
@@ -170,7 +172,6 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
 
     private void handleAddAppointment(FooterViewHolder holder) {
         if (holder.termsCheckbox.isChecked()) {
-
             // Handle adding appointment
             String selectedDate = holder.selectDateButton.getText().toString();
             String selectedTime = holder.selectTimeButton.getText().toString();
@@ -178,20 +179,17 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
             if (selectedServices.isEmpty()) {
                 Toast.makeText(holder.itemView.getContext(), "Please select at least one service", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "No services selected");
-
-
                 return;
             }
 
             // Retrieve userId from SharedPreferences
             SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
             String userId = sharedPreferences.getString("user_id", null);
+            String username = sharedPreferences.getString("username", null);
 
             if (userId == null) {
                 Toast.makeText(holder.itemView.getContext(), "User ID is missing", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "User ID is missing");
-
-
                 return;
             }
 
@@ -228,8 +226,6 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
             call.enqueue(new Callback<AppointmentResponse>() {
                 @Override
                 public void onResponse(Call<AppointmentResponse> call, Response<AppointmentResponse> response) {
-
-
                     if (response.isSuccessful()) {
                         AppointmentResponse appointmentResponse = response.body();
                         if (appointmentResponse != null && appointmentResponse.isSuccess()) {
@@ -237,12 +233,17 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
                             Toast.makeText(holder.itemView.getContext(), "Appointment booked successfully", Toast.LENGTH_SHORT).show();
                             Log.d(TAG, "Appointment successfully booked. Response: " + appointmentResponse.toString());
 
-                            // Start AppointmentsActivity
+                            // Start AppointmentsActivity with user_id and username
                             Intent intent = new Intent(holder.itemView.getContext(), AppointmentsActivity.class);
+                            intent.putExtra("user_id", userId);
+                            intent.putExtra("username", username);
+
+                            // Log the user_id and username for debugging purposes
+                            Log.d("AppointmentsActivity", "Starting AppointmentsActivity with user_id: " + userId);
+                            Log.d("AppointmentsActivity", "Starting AppointmentsActivity with username: " + username);
+
                             holder.itemView.getContext().startActivity(intent);
 
-                            // Optionally finish the current activity
-                            // ((Activity) holder.itemView.getContext()).finish();
                         } else {
                             // Failure in booking appointment
                             Toast.makeText(holder.itemView.getContext(), appointmentResponse != null ? appointmentResponse.getMessage() : "Failed to book appointment. No details provided.", Toast.LENGTH_SHORT).show();
@@ -253,15 +254,11 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
                         Toast.makeText(holder.itemView.getContext(), "An error occurred while processing your request: " + response.message(), Toast.LENGTH_SHORT).show();
                         Log.d(TAG, "API error: " + response.message());
                     }
-
                 }
-
 
                 @Override
                 public void onFailure(Call<AppointmentResponse> call, Throwable t) {
-
                     holder.availableServicesRecyclerView.setVisibility(View.VISIBLE);
-
                     Toast.makeText(holder.itemView.getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Network error: " + t.getMessage());
                 }
@@ -271,8 +268,6 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
             Log.d(TAG, "Terms and conditions not agreed");
         }
     }
-
-
 
 
     static class AppointmentServiceViewHolder extends RecyclerView.ViewHolder {

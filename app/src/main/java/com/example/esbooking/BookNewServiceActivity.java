@@ -26,6 +26,8 @@ public class BookNewServiceActivity extends AppCompatActivity {
     private AppointmentServicesAdapter appointmentServicesAdapter;
     private List<AppointmentService> appointmentServiceList;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
