@@ -52,4 +52,7 @@ public interface ApiService {
     @Headers("Content-Type: application/json")
     @POST("book_appointment.php")
     Call<AppointmentResponse> bookAppointment(@Body AppointmentRequest appointmentRequest);
+
+    @GET("pendingservices.php") // Update with your actual endpoint
+    Call<PendingServicesResponse> getPendingServices(@Query("user_id") String userId);
 }

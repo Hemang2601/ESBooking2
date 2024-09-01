@@ -3,4 +3,16 @@
     <string name="pending_icon" />
     <string name="dialog_icon_desc">Icon representing registration success</string>
     <string name="progress_dialog_message">Booking appointment...</string>
+
+    <!-- Service Item Strings -->
+    <string name="service_name">Service Name</string>
+    <string name="service_status">Status</string>
+    <string name="appointment_date">Appointment Date</string>
+    <string name="appointment_time">Appointment Time</string>
+
+    <!-- Optional: Default Text for Views -->
+    <string name="default_service_name">Service Name</string>
+    <string name="default_service_status">Pending</string>
+    <string name="default_appointment_date">YYYY-MM-DD</string>
+    <string name="default_appointment_time">HH:MM:SS</string>
 </resources>
