@@ -45,4 +45,7 @@ public interface ApiService {
             @Field("new_password") String newPassword
     );
 
+    @GET("getservices.php")
+    Call<ApiResponse> getServices();
+
 }
