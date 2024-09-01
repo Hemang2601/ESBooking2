@@ -55,4 +55,8 @@ public interface ApiService {
 
     @GET("pendingservices.php") // Update with your actual endpoint
     Call<PendingServicesResponse> getPendingServices(@Query("user_id") String userId);
+
+    @GET("completedservices.php")
+    Call<CompletedServicesResponseWrapper> getCompletedServices(@Query("user_id") String userId);
 }
+
