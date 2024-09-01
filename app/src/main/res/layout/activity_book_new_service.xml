@@ -33,13 +33,6 @@
             android:textStyle="bold"/>
     </FrameLayout>
 
-    <!-- Loading spinner centered within the RelativeLayout -->
-    <ProgressBar
-        android:id="@+id/loading_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone"/> <!-- Set visibility to "gone" initially -->
 
     <!-- RecyclerView for displaying available services -->
     <androidx.recyclerview.widget.RecyclerView
