@@ -6,6 +6,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -48,6 +49,7 @@ public interface ApiService {
     @GET("getservices.php")
     Call<ApiResponse> getServices();
 
-    @POST("appointments.php")
-    Call<ApiResponse> bookAppointment(@Body AppointmentRequest appointmentRequest);
+    @Headers("Content-Type: application/json")
+    @POST("book_appointment.php")
+    Call<AppointmentResponse> bookAppointment(@Body AppointmentRequest appointmentRequest);
 }

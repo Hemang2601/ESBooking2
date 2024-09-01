@@ -2,27 +2,56 @@ package com.example.esbooking;
 
 public class AppointmentRequest {
     private String userId;
-    private String serviceId;
+    private String serviceIds; // Changed to String for comma-separated IDs
     private String date;
     private String time;
 
-    public AppointmentRequest(String userId, String serviceId, String date, String time) {
+    public AppointmentRequest(String userId, String serviceIds, String date, String time) {
         this.userId = userId;
-        this.serviceId = serviceId;
+        this.serviceIds = serviceIds;
         this.date = date;
         this.time = time;
     }
 
-    // Getters and setters
-    public String getUserId() { return userId; }
-    public void setUserId(String userId) { this.userId = userId; }
+    public String getUserId() {
+        return userId;
+    }
 
-    public String getServiceId() { return serviceId; }
-    public void setServiceId(String serviceId) { this.serviceId = serviceId; }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-    public String getDate() { return date; }
-    public void setDate(String date) { this.date = date; }
+    public String getServiceIds() {
+        return serviceIds;
+    }
 
-    public String getTime() { return time; }
-    public void setTime(String time) { this.time = time; }
+    public void setServiceIds(String serviceIds) {
+        this.serviceIds = serviceIds;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentRequest{" +
+                "userId='" + userId + '\'' +
+                ", serviceIds='" + serviceIds + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                '}';
+    }
 }

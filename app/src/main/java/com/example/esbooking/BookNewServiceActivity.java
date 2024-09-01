@@ -52,7 +52,7 @@ public class BookNewServiceActivity extends AppCompatActivity {
 
         // Initialize the appointment service list and adapter
         appointmentServiceList = new ArrayList<>();
-        appointmentServicesAdapter = new AppointmentServicesAdapter(appointmentServiceList);
+        appointmentServicesAdapter = new AppointmentServicesAdapter(appointmentServiceList, userId);
         availableServicesRecyclerView.setAdapter(appointmentServicesAdapter);
 
         // Load services from the API

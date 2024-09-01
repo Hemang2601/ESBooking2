@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
     android:background="#F5F5F5">
 
     <!-- Header with Back Arrow and Title -->
     <FrameLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="16dp">
@@ -34,13 +33,22 @@
             android:textStyle="bold"/>
     </FrameLayout>
 
+    <!-- Loading spinner centered within the RelativeLayout -->
+    <ProgressBar
+        android:id="@+id/loading_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/> <!-- Set visibility to "gone" initially -->
+
     <!-- RecyclerView for displaying available services -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/availableServicesRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="vertical"
-        android:background="@android:color/white"
-        android:elevation="2dp"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@id/header"
+    android:scrollbars="vertical"
+    android:background="@android:color/white"
+    android:elevation="2dp"
+    android:visibility="visible"/>
+</RelativeLayout>

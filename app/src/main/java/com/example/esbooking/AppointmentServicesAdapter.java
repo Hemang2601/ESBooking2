@@ -2,6 +2,9 @@ package com.example.esbooking;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +21,26 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int ITEM_VIEW_TYPE_SERVICE = 0;
     private static final int ITEM_VIEW_TYPE_FOOTER = 1;
+    private static final String TAG = "AppointmentServicesAdapter";
 
     private List<AppointmentService> appointmentServiceList;
     private List<AppointmentService> selectedServices = new ArrayList<>();
+    private ApiService apiService;
+    private String userId; // Add this field
 
-    public AppointmentServicesAdapter(List<AppointmentService> appointmentServiceList) {
+    public AppointmentServicesAdapter(List<AppointmentService> appointmentServiceList, String userId) {
         this.appointmentServiceList = appointmentServiceList;
+        this.userId = userId; // Initialize userId
+        this.apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
+        Log.d(TAG, "ApiService initialized");
     }
 
     @NonNull
@@ -59,8 +72,10 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
             serviceHolder.serviceCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     selectedServices.add(appointmentService);
+                    Log.d(TAG, "Service selected: " + appointmentService.getServiceName());
                 } else {
                     selectedServices.remove(appointmentService);
+                    Log.d(TAG, "Service deselected: " + appointmentService.getServiceName());
                 }
             });
         } else { // FooterViewHolder
@@ -93,6 +108,7 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
                 (view, year, month, dayOfMonth) -> {
                     String date = String.format("%02d/%02d/%d", dayOfMonth, month + 1, year);
                     holder.selectDateButton.setText(date);
+                    Log.d(TAG, "Selected date: " + date);
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
@@ -144,56 +160,124 @@ public class AppointmentServicesAdapter extends RecyclerView.Adapter<RecyclerVie
                             selectedHour == 12 ? "12:00 PM" :
                                     String.format("%02d:00 PM", selectedHour - 12);
                     holder.selectTimeButton.setText(time);
+                    Log.d(TAG, "Selected time: " + time);
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
         builder.create().show();
     }
 
-
     private void handleAddAppointment(FooterViewHolder holder) {
         if (holder.termsCheckbox.isChecked()) {
             // Handle adding appointment
-            // You can also get the selected date and time here if needed
             String selectedDate = holder.selectDateButton.getText().toString();
             String selectedTime = holder.selectTimeButton.getText().toString();
 
-            // Add appointment logic here (e.g., save to database, send network request)
+            if (selectedServices.isEmpty()) {
+                Toast.makeText(holder.itemView.getContext(), "Please select at least one service", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "No services selected");
+                return;
+            }
 
-            Toast.makeText(holder.itemView.getContext(), "Appointment added for " + selectedDate + " at " + selectedTime, Toast.LENGTH_SHORT).show();
+            // Retrieve userId from SharedPreferences
+            SharedPreferences sharedPreferences = holder.itemView.getContext().getSharedPreferences("MyPrefsFile", Context.MODE_PRIVATE);
+            String userId = sharedPreferences.getString("user_id", null);
+
+            if (userId == null) {
+                Toast.makeText(holder.itemView.getContext(), "User ID is missing", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "User ID is missing");
+                return;
+            }
+
+            // Collect selected service IDs into a comma-separated string
+            StringBuilder serviceIdsBuilder = new StringBuilder();
+            for (AppointmentService service : selectedServices) {
+                if (serviceIdsBuilder.length() > 0) {
+                    serviceIdsBuilder.append(",");
+                }
+                serviceIdsBuilder.append(service.getServiceId());
+            }
+            String serviceIdsString = serviceIdsBuilder.toString();
+
+            // Log the appointment details before sending
+            Log.d(TAG, "User id : " + userId);
+            Log.d(TAG, "Adding appointments with details:");
+            Log.d(TAG, "Selected Date: " + selectedDate);
+            Log.d(TAG, "Selected Time: " + selectedTime);
+            Log.d(TAG, "Selected Service IDs: " + serviceIdsString);
+
+            // Create a single appointment request for all services
+            AppointmentRequest appointmentRequest = new AppointmentRequest(
+                    userId,
+                    serviceIdsString, // Passing the comma-separated string
+                    selectedDate,
+                    selectedTime
+            );
+
+            // Log appointment request details
+            Log.d(TAG, "Appointment request: " + appointmentRequest.toString());
+
+            // Make API call to book appointment
+            Call<AppointmentResponse> call = apiService.bookAppointment(appointmentRequest);
+            call.enqueue(new Callback<AppointmentResponse>() {
+                @Override
+                public void onResponse(Call<AppointmentResponse> call, Response<AppointmentResponse> response) {
+                    if (response.isSuccessful()) {
+                        AppointmentResponse appointmentResponse = response.body();
+                        if (appointmentResponse != null && appointmentResponse.isSuccess()) {
+                            Toast.makeText(holder.itemView.getContext(), "Appointment booked successfully", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Appointment booked successfully");
+                        } else {
+                            Toast.makeText(holder.itemView.getContext(), "Failed to book appointment", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Failed to book appointment: " + (appointmentResponse != null ? appointmentResponse.getMessage() : "No response message"));
+                        }
+                    } else {
+                        Toast.makeText(holder.itemView.getContext(), "API error: " + response.message(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "API error: " + response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AppointmentResponse> call, Throwable t) {
+                    Toast.makeText(holder.itemView.getContext(), "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "Network error: " + t.getMessage());
+                }
+            });
         } else {
-            // Show a message to accept terms and conditions
-            Toast.makeText(holder.itemView.getContext(), "Please accept the terms and conditions", Toast.LENGTH_SHORT).show();
+            Toast.makeText(holder.itemView.getContext(), "Please agree to the terms and conditions", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Terms and conditions not agreed");
         }
     }
 
-    public class AppointmentServiceViewHolder extends RecyclerView.ViewHolder {
-        CheckBox serviceCheckbox;
+
+
+    static class AppointmentServiceViewHolder extends RecyclerView.ViewHolder {
         TextView serviceName;
         TextView serviceDescription;
         TextView servicePrice;
+        CheckBox serviceCheckbox;
 
-        public AppointmentServiceViewHolder(@NonNull View itemView) {
+        AppointmentServiceViewHolder(View itemView) {
             super(itemView);
-            serviceCheckbox = itemView.findViewById(R.id.serviceCheckbox);
             serviceName = itemView.findViewById(R.id.serviceName);
             serviceDescription = itemView.findViewById(R.id.serviceDescription);
             servicePrice = itemView.findViewById(R.id.servicePrice);
+            serviceCheckbox = itemView.findViewById(R.id.serviceCheckbox);
         }
     }
 
-    public class FooterViewHolder extends RecyclerView.ViewHolder {
+    static class FooterViewHolder extends RecyclerView.ViewHolder {
         Button selectDateButton;
         Button selectTimeButton;
-        CheckBox termsCheckbox;
         Button addAppointmentButton;
+        CheckBox termsCheckbox;
 
-        public FooterViewHolder(@NonNull View itemView) {
+        FooterViewHolder(View itemView) {
             super(itemView);
             selectDateButton = itemView.findViewById(R.id.selectDateButton);
             selectTimeButton = itemView.findViewById(R.id.selectTimeButton);
-            termsCheckbox = itemView.findViewById(R.id.termsCheckbox);
             addAppointmentButton = itemView.findViewById(R.id.addAppointmentButton);
+            termsCheckbox = itemView.findViewById(R.id.termsCheckbox);
         }
     }
 }
