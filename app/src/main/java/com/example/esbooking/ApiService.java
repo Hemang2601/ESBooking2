@@ -48,4 +48,6 @@ public interface ApiService {
     @GET("getservices.php")
     Call<ApiResponse> getServices();
 
+    @POST("appointments.php")
+    Call<ApiResponse> bookAppointment(@Body AppointmentRequest appointmentRequest);
 }
