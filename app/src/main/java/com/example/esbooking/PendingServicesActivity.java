@@ -42,15 +42,12 @@ public class PendingServicesActivity extends AppCompatActivity {
 
         // Initialize the back arrow button and set the onClick listener
         ImageView backArrowButton = findViewById(R.id.backArrowButton);
-        backArrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intentToAppointments = new Intent(PendingServicesActivity.this, AppointmentsActivity.class);
-                intentToAppointments.putExtra("user_id", userId);
-                intentToAppointments.putExtra("username", username);
-                startActivity(intentToAppointments);
-                finish(); // Close this activity and return to the AppointmentsActivity
-            }
+        backArrowButton.setOnClickListener(v -> {
+            Intent intentToAppointments = new Intent(PendingServicesActivity.this, AppointmentsActivity.class);
+            intentToAppointments.putExtra("user_id", userId);
+            intentToAppointments.putExtra("username", username);
+            startActivity(intentToAppointments);
+            finish(); // Close this activity and return to the AppointmentsActivity
         });
 
         // Initialize RecyclerView for pending services
@@ -91,23 +88,31 @@ public class PendingServicesActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     PendingServicesResponse apiResponse = response.body();
 
-                    // Log the response data
-                    Log.d(TAG, "Response Body: " + apiResponse.getData().toString());
+                    if (apiResponse.isSuccess() && apiResponse.getData() != null && !apiResponse.getData().isEmpty()) {
+                        // Show RecyclerView and hide "Data Not Found" card
+                        pendingServicesRecyclerView.setVisibility(View.VISIBLE);
+                        findViewById(R.id.dataNotFoundCard).setVisibility(View.GONE);
 
-                    if (apiResponse.isSuccess() && apiResponse.getData() != null) {
                         // Update the pending service list with the response data
+                        pendingServiceList.clear();
                         pendingServiceList.addAll(apiResponse.getData());
                         pendingServicesAdapter.notifyDataSetChanged();
 
                         Log.d(TAG, "Pending services loaded successfully, count: " + pendingServiceList.size());
                     } else {
-                        // Handle unsuccessful response
-                        Log.e(TAG, "Error: " + apiResponse.getMessage());
-                        Toast.makeText(PendingServicesActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        // Hide RecyclerView and show "Data Not Found" card
+                        pendingServicesRecyclerView.setVisibility(View.GONE);
+                        findViewById(R.id.dataNotFoundCard).setVisibility(View.VISIBLE);
+
+                        // Optionally show a Toast message
+                        Toast.makeText(PendingServicesActivity.this, "No Pending Services Found", Toast.LENGTH_SHORT).show();
+
+                        Log.d(TAG, "No pending services found");
                     }
                 } else {
                     // Log the error code and message
                     Log.e(TAG, "Failed to load pending services, Response Code: " + response.code());
+                    findViewById(R.id.dataNotFoundCard).setVisibility(View.VISIBLE);
                     showErrorDialog();
                 }
             }

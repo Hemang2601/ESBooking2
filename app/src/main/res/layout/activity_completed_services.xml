@@ -35,6 +35,29 @@
             android:textStyle="bold" />
     </FrameLayout>
 
+    <!-- CardView for "Data Not Found" message -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dataNotFoundCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_margin="30dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:elevation="10dp"
+        android:padding="16dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Completed Services Found"
+            android:textSize="18sp"
+            android:textColor="#FF0000"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </androidx.cardview.widget.CardView>
+
     <!-- RecyclerView for displaying completed services -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/completedServicesRecyclerView"

@@ -36,6 +36,28 @@
             android:textStyle="bold" />
     </FrameLayout>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dataNotFoundCard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_margin="30dp"
+        android:visibility="gone"
+        android:elevation="10dp"
+        android:padding="16dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Pending Services Found"
+            android:textSize="18sp"
+            android:textColor="#FF0000"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+    </androidx.cardview.widget.CardView>
+
+
     <!-- RecyclerView for displaying pending services, centered vertically -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/pendingServicesRecyclerView"

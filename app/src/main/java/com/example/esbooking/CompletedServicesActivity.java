@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -90,25 +89,24 @@ public class CompletedServicesActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     CompletedServicesResponseWrapper apiResponse = response.body();
 
-                    // Log the response data
-                    Log.d(TAG, "Response Body: " + apiResponse.getData().toString());
+                    if (apiResponse.isSuccess() && apiResponse.getData() != null && !apiResponse.getData().isEmpty()) {
+                        // Show RecyclerView and hide "Data Not Found" card
+                        findViewById(R.id.completedServicesRecyclerView).setVisibility(View.VISIBLE);
+                        findViewById(R.id.dataNotFoundCard).setVisibility(View.GONE);
 
-                    if (apiResponse.isSuccess() && apiResponse.getData() != null) {
                         // Update the completed service list with the response data
-                        completedServiceList.clear(); // Clear any previous data
+                        completedServiceList.clear();
                         completedServiceList.addAll(apiResponse.getData());
                         completedServicesAdapter.notifyDataSetChanged();
-
-                        Log.d(TAG, "Completed services loaded successfully, count: " + completedServiceList.size());
                     } else {
-                        // Handle unsuccessful response
-                        Log.e(TAG, "Error: " + apiResponse.getMessage());
-                        Toast.makeText(CompletedServicesActivity.this, apiResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                        // Hide RecyclerView and show "Data Not Found" card
+                        findViewById(R.id.completedServicesRecyclerView).setVisibility(View.GONE);
+                        findViewById(R.id.dataNotFoundCard).setVisibility(View.VISIBLE);
                     }
                 } else {
                     // Log the error code and message
-                    Log.e(TAG, "Failed to load completed services, Response Code: " + response.code());
-                    Toast.makeText(CompletedServicesActivity.this, "Failed to load completed services. Response Code: " + response.code(), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Failed to load completed services. Response Code: " + response.code());
+
                 }
             }
 
