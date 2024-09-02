@@ -15,4 +15,7 @@
     <string name="default_service_status">Pending</string>
     <string name="default_appointment_date">YYYY-MM-DD</string>
     <string name="default_appointment_time">HH:MM:SS</string>
+
+    <string name="progress_dialog_message1">Loading, please wait...</string>
+
 </resources>

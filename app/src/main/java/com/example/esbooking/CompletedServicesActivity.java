@@ -1,5 +1,6 @@
 package com.example.esbooking;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ public class CompletedServicesActivity extends AppCompatActivity {
     private RecyclerView completedServicesRecyclerView;
     private CompletedServicesAdapter completedServicesAdapter;
     private List<CompletedServicesResponse> completedServiceList;
+    private ProgressDialog progressDialog; // Progress dialog variable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +65,13 @@ public class CompletedServicesActivity extends AppCompatActivity {
         loadCompletedServices();
     }
 
-
     private void loadCompletedServices() {
+        // Initialize the ProgressDialog
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.progress_dialog_message1)); // Make sure to add this string to your strings.xml
+        progressDialog.setCancelable(false);
+        progressDialog.show(); // Show the progress dialog
+
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         Call<CompletedServicesResponseWrapper> call = apiService.getCompletedServices(userId);
 
@@ -74,6 +81,11 @@ public class CompletedServicesActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<CompletedServicesResponseWrapper> call, Response<CompletedServicesResponseWrapper> response) {
                 Log.d(TAG, "API response received");
+
+                // Dismiss the progress dialog
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
 
                 if (response.isSuccessful() && response.body() != null) {
                     CompletedServicesResponseWrapper apiResponse = response.body();
@@ -102,9 +114,28 @@ public class CompletedServicesActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<CompletedServicesResponseWrapper> call, Throwable t) {
+                // Dismiss the progress dialog
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                }
+
                 Log.e(TAG, "Error fetching completed services", t);
-                Toast.makeText(CompletedServicesActivity.this, "Error fetching completed services. Please try again later.", Toast.LENGTH_SHORT).show();
+
+                // Show an AlertDialog suggesting the user restart the app
+                new androidx.appcompat.app.AlertDialog.Builder(CompletedServicesActivity.this)
+                        .setTitle("Error")
+                        .setMessage("A problem occurred with the API or network. Please restart the application.")
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            // Restart the app by launching the main activity
+                            Intent restartIntent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+                            restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(restartIntent);
+                            finish(); // Close the current activity
+                        })
+                        .setCancelable(false) // Prevents the user from dismissing the dialog without pressing the OK button
+                        .show();
             }
+
         });
     }
 }

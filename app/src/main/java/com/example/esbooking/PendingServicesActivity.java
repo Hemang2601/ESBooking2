@@ -1,5 +1,6 @@
 package com.example.esbooking;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +28,7 @@ public class PendingServicesActivity extends AppCompatActivity {
     private RecyclerView pendingServicesRecyclerView;
     private PendingServicesAdapter pendingServicesAdapter;
     private List<PendingService> pendingServiceList;
+    private ProgressDialog progressDialog; // ProgressDialog declaration
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,11 @@ public class PendingServicesActivity extends AppCompatActivity {
         pendingServicesAdapter = new PendingServicesAdapter(pendingServiceList);
         pendingServicesRecyclerView.setAdapter(pendingServicesAdapter);
 
+        // Initialize the ProgressDialog
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(R.string.progress_dialog_message)); // Set the message
+        progressDialog.setCancelable(false); // Prevent dismissal by user interaction
+
         // Load pending services from the API
         loadPendingServices();
     }
@@ -67,11 +75,17 @@ public class PendingServicesActivity extends AppCompatActivity {
         ApiService apiService = RetrofitClient.getRetrofitInstance().create(ApiService.class);
         Call<PendingServicesResponse> call = apiService.getPendingServices(userId);
 
+        // Show the ProgressDialog before starting the API call
+        progressDialog.show();
+
         Log.d(TAG, "API call to get pending services started");
 
         call.enqueue(new Callback<PendingServicesResponse>() {
             @Override
             public void onResponse(Call<PendingServicesResponse> call, Response<PendingServicesResponse> response) {
+                // Dismiss the ProgressDialog after receiving the response
+                progressDialog.dismiss();
+
                 Log.d(TAG, "API response received");
 
                 if (response.isSuccessful() && response.body() != null) {
@@ -94,15 +108,33 @@ public class PendingServicesActivity extends AppCompatActivity {
                 } else {
                     // Log the error code and message
                     Log.e(TAG, "Failed to load pending services, Response Code: " + response.code());
-                    Toast.makeText(PendingServicesActivity.this, "Failed to load pending services", Toast.LENGTH_SHORT).show();
+                    showErrorDialog();
                 }
             }
 
             @Override
             public void onFailure(Call<PendingServicesResponse> call, Throwable t) {
+                // Dismiss the ProgressDialog if the call fails
+                progressDialog.dismiss();
+
                 Log.e(TAG, "Error fetching pending services", t);
-                Toast.makeText(PendingServicesActivity.this, "Error fetching pending services", Toast.LENGTH_SHORT).show();
+                showErrorDialog();
             }
         });
+    }
+
+    private void showErrorDialog() {
+        new AlertDialog.Builder(PendingServicesActivity.this)
+                .setTitle("Error")
+                .setMessage("A problem occurred with the API or network. Please restart the application.")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // Restart the app by launching the main activity
+                    Intent restartIntent = getBaseContext().getPackageManager().getLaunchIntentForPackage(getBaseContext().getPackageName());
+                    restartIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(restartIntent);
+                    finish(); // Close the current activity
+                })
+                .setCancelable(false) // Prevents the user from dismissing the dialog without pressing the OK button
+                .show();
     }
 }
