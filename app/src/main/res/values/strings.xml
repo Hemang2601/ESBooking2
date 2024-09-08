@@ -17,5 +17,13 @@
     <string name="default_appointment_time">HH:MM:SS</string>
 
     <string name="progress_dialog_message1">Loading, please wait...</string>
+    <string name="progress_dialog_message2">Loading, please wait...</string>
+
+        <string name="bill_number">Bill Number</string>
+        <string name="bill_service_name">Service Name</string>
+        <string name="amount">Amount</string>
+        <string name="payment_status">Payment Status</string>
+
+
 
 </resources>

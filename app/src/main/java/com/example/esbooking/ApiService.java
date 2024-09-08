@@ -58,5 +58,9 @@ public interface ApiService {
 
     @GET("completedservices.php")
     Call<CompletedServicesResponseWrapper> getCompletedServices(@Query("user_id") String userId);
+
+    @GET("billing.php")
+    Call<BillingResponseWrapper> getBillingData(@Query("user_id") String userId);
+
 }
 

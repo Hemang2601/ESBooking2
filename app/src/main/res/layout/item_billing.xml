@@ -1,42 +1,176 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    cardview:cardCornerRadius="8dp"
-    cardview:cardElevation="4dp"
-    cardview:cardBackgroundColor="@android:color/white">
+    android:layout_margin="16dp"
+    android:padding="10dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="@android:color/white">
 
-    <!-- Content for each billing item -->
-    <LinearLayout
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:stretchColumns="1"
+        android:padding="8dp">
 
-        <!-- Service Name -->
-        <TextView
-            android:id="@+id/serviceName"
-            android:layout_width="wrap_content"
+        <!-- Bill Number Row -->
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:paddingBottom="8dp">
 
-        <!-- Amount -->
-        <TextView
-            android:id="@+id/amount"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_id"
+                android:contentDescription="@string/bill_number"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/billNoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:text="Bill No"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+        </TableRow>
+
+        <!-- Service Name Row -->
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"/>
+            android:paddingBottom="8dp">
 
-        <!-- Status -->
-        <TextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_service"
+                android:contentDescription="@string/bill_service_name"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/serviceNameTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="Service Name"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </TableRow>
+
+        <!-- Amount Row -->
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"/>
+            android:paddingBottom="8dp">
 
-    </LinearLayout>
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_money"
+                android:contentDescription="@string/amount"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/amountTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:text="Amount"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </TableRow>
+
+        <!-- Payment Status Row -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_status"
+                android:contentDescription="@string/payment_status"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/paymentStatusTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="@android:color/darker_gray"
+                android:text="Payment Status"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </TableRow>
+
+        <!-- Appointment Date Row -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_date"
+                android:contentDescription="@string/appointment_date"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/appointmentDateTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:text="Appointment Date"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </TableRow>
+
+        <!-- Appointment Time Row -->
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/ic_time"
+                android:contentDescription="@string/appointment_time"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/appointmentTimeTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:text="Appointment Time"
+                android:maxLines="1"
+                android:ellipsize="end" />
+        </TableRow>
+
+    </TableLayout>
+
 </androidx.cardview.widget.CardView>
